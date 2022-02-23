@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue2.x/3.x双向绑定基本原理</title>
+    <script src="../utils/data_watch.js"></script>
+    <style>
+        html,
+        body,
+        h2 {
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #app {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box_1,
+        .box_2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box_1">
+            <h2>vue2.x双向绑定</h2>
+            <section>
+                <button id="reduce">-</button>
+                <span id="text"></span>
+                <button id="add">+</button>
+            </section>
+        </div>
+        <div class="box_2">
+            <h2>vue3.x双向绑定</h2>
+            <section>
+                <button id="reduce_1">-</button>
+                <span id="text_1"></span>
+                <button id="add_1">+</button>
+            </section>
+            <section>
+                <button id="reduce_2">-</button>
+                <span id="text_2"></span>
+                <button id="add_2">+</button>
+            </section>
+        </div>
+    </div>
+    <script>
+        let obj_1 = {
+            count_1: 0
+        }
+        data_watch_v2({
+            obj: obj_1,
+            key: 'count_1',
+            tag: 'vue_2',
+            selector: '.box_1 #text'
+        })
+        document.querySelector('.box_1 #reduce').addEventListener('click', () => { obj_1.count_1-- })
+        document.querySelector('.box_1 #add').addEventListener('click', () => { obj_1.count_1++ })
+
+        let obj_2 = {
+            count_1: 0,
+            count_2: 0,
+        }
+
+        let obj_3 = data_watch_v3({
+            obj: obj_2,
+            tag: 'vue_3_1',
+            selector: '.box_2 #text_1'
+        })
+        let obj_4 = data_watch_v3({
+            obj: obj_2,
+            tag: 'vue_3_2',
+            selector: '.box_2 #text_2'
+        })
+        document.querySelector('.box_2 #reduce_1').addEventListener('click', () => { obj_3.count_1-- })
+        document.querySelector('.box_2 #add_1').addEventListener('click', () => { obj_3.count_1++ })
+        document.querySelector('.box_2 #reduce_2').addEventListener('click', () => { obj_4.count_2-- })
+        document.querySelector('.box_2 #add_2').addEventListener('click', () => { obj_4.count_2++ })
+    </script>
+</body>
+
+</html>
